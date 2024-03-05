@@ -98,7 +98,12 @@ pub mod demo_storage {
         #[ink(message)]
         pub fn check_test(&self, _test_id: String) -> bool {
             // return
-            !self.get_test_data(_test_id).is_none()
+            !self
+                .storage_data
+                .nested_mapping
+                .get(&_test_id.into_bytes())
+                .unwrap_or(None)
+                .is_none()
         }
 
         #[ink(message)]

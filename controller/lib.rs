@@ -4,13 +4,20 @@
 #[openbrush::contract]
 pub mod demo_controller {
     /// @dev Imports
-    use ink::prelude::{string::String, vec::Vec};
+    use ink::prelude::vec::Vec;
     use openbrush::traits::Storage;
 
     /// @dev Custom types
     pub type SelectorBytes = [u8; 4];
     pub type EthAddress = [u8; 20];
     pub type StringBytes = Vec<u8>;
+
+    /// @dev Custom errors
+    #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    pub enum ControllerError {
+        NotUsed,
+    }
 
     /// @dev Custom structs
     #[derive(scale::Encode, scale::Decode, Clone, Debug)]
@@ -68,7 +75,7 @@ pub mod demo_controller {
             &mut self,
             _storage: AccountId,
             _test: TestStruct,
-        ) -> Result<(), String> {
+        ) -> Result<(), ControllerError> {
             // parameters
             let add_test_selector_ =
                 ink::env::call::Selector::new(ink::selector_bytes!("add_test"));

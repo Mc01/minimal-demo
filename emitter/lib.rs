@@ -4,12 +4,19 @@
 #[openbrush::contract]
 pub mod demo_emitter {
     /// @dev Imports
-    use ink::prelude::{string::String, vec::Vec};
+    use ink::prelude::vec::Vec;
     use openbrush::traits::Storage;
 
     /// @dev Custom types
     pub type SelectorBytes = [u8; 4];
     pub type StringBytes = Vec<u8>;
+
+    /// @dev Custom errors
+    #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    pub enum EmitterError {
+        NotUsed,
+    }
 
     /// @dev Custom wrappers for passing many Scale-concatenated args as single argument to call builder
     pub struct CallInput<'a>(pub &'a [u8]);
@@ -57,7 +64,7 @@ pub mod demo_emitter {
             _controller: AccountId,   // deployed controller address
             _selector: SelectorBytes, // function selector to invoke
             _args: StringBytes,       // byte-encoded arguments for function
-        ) -> Result<(), String> {
+        ) -> Result<(), EmitterError> {
             // perform new call on controller
             ink::env::call::build_call::<ink::env::DefaultEnvironment>()
                 .call(_controller)
