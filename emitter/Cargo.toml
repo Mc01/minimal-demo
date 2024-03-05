@@ -1,0 +1,28 @@
+[workspace]
+
+[package]
+name = "demo_emitter"
+version = "1.0.0"
+authors = ["Mc01 <phenom.home@gmail.com>"]
+edition = "2021"
+publish = false
+
+[dependencies]
+ink = { version = "4.3.0", default-features = false }
+scale = { package = "parity-scale-codec", version = "3", default-features = false, features = ["derive"] }
+scale-info = { version = "2", default-features = false, features = ["derive"], optional = true }
+openbrush = { default-features = false, version = "4.0.0-beta" }
+
+[lib]
+name = "demo_emitter"
+path = "lib.rs"
+
+[features]
+default = ["std"]
+std = [
+    "ink/std",
+    "scale/std",
+    "scale-info/std",
+    "openbrush/std",
+]
+ink-as-dependency = []

@@ -1,0 +1,5 @@
+*.lock
+*/target/
+!*/target/ink/*.contract
+!*/target/ink/*.json
+!*/target/ink/*.wasm
